@@ -7,17 +7,18 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       onDelete: "CASCADE",
       references: {
-        model: "Topic",
+        model: "Topics",
         key: "id",
         as: "topicId",
       }
     }
-  }, {});
+  },{});
+
   Banner.associate = function(models) {
-    Banner.belongsTo(models.Topic, {
-      foreignKey: "topicId",
-      onDelete: "CASCADE",
-    });
+     Banner.belongsTo(models.Topic, {
+       foreignKey: "topicId",
+       onDelete: "CASCADE",
+     });
   };
   return Banner;
 };
