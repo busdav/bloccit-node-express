@@ -5,13 +5,8 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING,
     topicId: {
       type: DataTypes.INTEGER,
-      onDelete: "CASCADE",
-      references: {
-        model: "Topics",
-        key: "id",
-        as: "topicId",
+      allowNull: false
       }
-    }
   },{});
 
   Banner.associate = function(models) {
