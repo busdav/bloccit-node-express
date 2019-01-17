@@ -64,7 +64,7 @@ describe("routes : posts", () => {
     describe("GET /topics/:topicId/posts/new", () => {
      it("should not render a new post form", (done) => {
       request.get(`${base}/${this.topic.id}/posts/new`, (err, res, body) => {
-        expect(body).toContain("Error");
+        expect(body).not.toContain("New Post");
         done();
         });
       });
