@@ -134,6 +134,70 @@ describe("Vote", () => {
           })
         });
  
+        it("should not create a vote with a value outside of 1 or -1", (done) => {
+          Vote.create({
+            value: 2,
+            postId: this.post.id,
+            userId: this.user.id
+          })
+          .then((vote) => {
+ 
+           // the code in this block will not be evaluated since the validation error
+           // will skip it. Instead, we'll catch the error in the catch block below
+           // and set the expectations there
+ 
+            done();
+ 
+          })
+          .catch((err) => {
+ 
+            expect(err.message).toContain("Validation error");
+            done();
+ 
+          })
+        });
+
+        it("should not create an vote on a post for a user who has already voted on that post", (done) => {
+      
+                Vote.create({
+                  value: 1,
+                  postId: this.post.id,
+                  userId: this.user.id
+                })
+                .then((vote) => {
+       
+          // #4
+                  expect(vote.value).toBe(1);
+                  expect(vote.postId).toBe(this.post.id);
+                  expect(vote.userId).toBe(this.user.id);
+                  done();
+       
+                })
+                .catch((err) => {
+                  console.log(err);
+                  done();
+                });
+
+                Vote.create({
+                  value: 1,
+                  postId: this.post.id,
+                  userId: this.user.id
+                })
+                .then((vote) => {
+       
+          // #4
+                  expect(vote.value).toBe(1);
+                  expect(vote.postId).toBe(this.post.id);
+                  expect(vote.userId).toBe(this.user.id);
+                  done();
+       
+                })
+                .catch((err) => {
+                  console.log(err);
+                  done();
+                });
+              });
+
       });
 
       describe("#setUser()", () => {

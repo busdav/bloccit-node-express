@@ -3,7 +3,6 @@ const voteQueries = require("../db/queries.votes.js");
 module.exports = {
   upvote(req, res, next){
 
- // #2
     if(req.user){
       voteQueries.createVote(req, 1, (err, vote) => {
         if(err){
@@ -18,6 +17,7 @@ module.exports = {
       res.redirect(req.headers.referer);
     }
   },
+  
   downvote(req, res, next){
 
     if(req.user){

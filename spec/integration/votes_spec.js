@@ -54,8 +54,8 @@ describe("routes : votes", () => {
     });
   });
 
-  // test suites go here
 
+  
   describe("guest attempting to vote on a post", () => {
 
     beforeEach((done) => {    // before each suite in this context
