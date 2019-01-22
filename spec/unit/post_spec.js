@@ -2,6 +2,8 @@ const sequelize = require("../../src/db/models/index").sequelize;
 const Topic = require("../../src/db/models").Topic;
 const Post = require("../../src/db/models").Post;
 const User = require("../../src/db/models").User;
+const Vote = require("../../src/db/models").Vote;
+
 
 
 
@@ -11,6 +13,7 @@ describe("Post", () => {
     this.topic;
     this.post;
     this.user;
+    this.vote;
 
     sequelize.sync({force: true}).then((res) => {
 
@@ -173,4 +176,67 @@ describe("Post", () => {
     });
 
   });
-});
+
+  describe("#getPoints()", () => {
+
+    it("should return the associated votes", (done) => {
+
+      Vote.create({           
+        value: 1,
+        postId: this.post.id,
+        userId: this.user.id
+      })
+      .then((vote) => {
+        this.vote = vote;        
+        this.post.getPoints()
+        .then((points) => {
+          expect(points).toBe(1);
+          done();
+        });
+      });
+    });
+  });
+
+
+  describe("#hasUpvoteFor()", () => {
+
+    it("should return the associated upvote", (done) => {
+
+      Vote.create({           
+        value: 1,
+        postId: this.post.id,
+        userId: this.user.id
+      })
+      .then((vote) => {
+        this.vote = vote;        
+        this.post.hasUpvoteFor(this.user.id)
+        .then((res) => {
+          expect(res).toBe(true);
+          done();
+        });
+      });
+    });
+  });
+
+
+  describe("#hasDownvoteFor()", () => {
+
+    it("should return the associated downvote", (done) => {
+
+      Vote.create({           
+        value: -1,
+        postId: this.post.id,
+        userId: this.user.id
+      })
+      .then((vote) => {
+        this.vote = vote;        
+        this.post.hasDownvoteFor(this.user.id)
+        .then((res) => {
+          expect(res).toBe(true);
+          done();
+        });
+      });
+    });
+  });
+
+})
