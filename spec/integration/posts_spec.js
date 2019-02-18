@@ -52,7 +52,7 @@ describe("routes : posts", () => {
       request.get({
         url: "http://localhost:3000/auth/fake",
         form: {
-          role: "guest"
+          userId: 0 // ensure no user in scope
         }
       },
         (err, res, body) => {
